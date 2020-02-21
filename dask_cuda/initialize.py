@@ -24,6 +24,8 @@ See https://docs.dask.org/en/latest/configuration.html for more information
 about Dask configuration.
 """
 import logging
+import os
+import uuid
 
 import dask
 
@@ -108,6 +110,10 @@ def dask_setup(
     enable_nvlink,
     net_devices,
 ):
+    os.environ["RMM_LOG_FILE"] = os.path.join(
+        os.environ["RMM_LOG_DIR"], uuid.uuid4().hex + os.extsep + "txt"
+    )
+
     if create_cuda_context:
         try:
             numba.cuda.current_context()
