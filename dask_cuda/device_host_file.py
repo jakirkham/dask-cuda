@@ -122,6 +122,9 @@ class DeviceHostFile(ZictBase):
         # For Worker compatibility only, where `fast` is host memory buffer
         self.fast = self.host_buffer if memory_limit == 0 else self.host_buffer.fast
 
+    def __contains__(self, key):
+        return (key in self.device_keys) or (key in self.host_buffer):
+
     def __setitem__(self, key, value):
         if is_device_object(value):
             self.device_keys.add(key)
