@@ -114,16 +114,34 @@ def test_device_host_file_step_by_step(tmp_path):
 
     da.assert_eq(dhf["a1"], a)
     del dhf["a1"]
+    assert set(dhf.device.keys()) == set(["b3", "b4"])
+    assert set(dhf.host.keys()) == set(["b2"])
+    assert set(dhf.disk.keys()) == set(["a2", "b1"])
     da.assert_eq(dhf["a2"], a)
     del dhf["a2"]
+    assert set(dhf.device.keys()) == set(["b3", "b4"])
+    assert set(dhf.host.keys()) == set(["b2"])
+    assert set(dhf.disk.keys()) == set(["b1"])
     da.assert_eq(dhf["b1"], b)
     del dhf["b1"]
+    assert set(dhf.device.keys()) == set(["b4"])
+    assert set(dhf.host.keys()) == set(["b2", "b3"])
+    assert set(dhf.disk.keys()) == set()
     da.assert_eq(dhf["b2"], b)
     del dhf["b2"]
+    assert set(dhf.device.keys()) == set(["b4"])
+    assert set(dhf.host.keys()) == set(["b3"])
+    assert set(dhf.disk.keys()) == set()
     da.assert_eq(dhf["b3"], b)
     del dhf["b3"]
+    assert set(dhf.device.keys()) == set(["b4"])
+    assert set(dhf.host.keys()) == set()
+    assert set(dhf.disk.keys()) == set()
     da.assert_eq(dhf["b4"], b)
     del dhf["b4"]
+    assert set(dhf.device.keys()) == set()
+    assert set(dhf.host.keys()) == set()
+    assert set(dhf.disk.keys()) == set()
 
     assert set(dhf.device.keys()) == set()
     assert set(dhf.host.keys()) == set()
